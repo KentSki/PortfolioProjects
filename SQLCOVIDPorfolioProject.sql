@@ -1,5 +1,5 @@
 Select *
-From [Portolio Project]..coviddeaths
+From [Portfolio Project]..coviddeaths
 Where continent is not null
 order by 3,4
 
@@ -8,7 +8,7 @@ order by 3,4
 --order by 3,4
 
 Select location, date, total_cases, new_cases, total_deaths, population
-From [Portolio Project]..coviddeaths
+From [Portfolio Project]..coviddeaths
 order by 1,2
 
 
@@ -16,7 +16,7 @@ order by 1,2
 
 
 Select location, date, total_cases, total_deaths, (total_deaths/total_cases)*100 as DeathPercentage
-From [Portolio Project]..coviddeaths
+From [Portfolio Project]..coviddeaths
 Where location like '%states%'
 and continent is not null
 order by 1,2
@@ -26,7 +26,7 @@ order by 1,2
 
 
 Select location, date, population, total_cases, (total_cases/population)*100 as PopulationInfectedPercentage
-From [Portolio Project]..coviddeaths
+From [Portfolio Project]..coviddeaths
 Where location like '%states%'
 order by 1,2
 
@@ -34,7 +34,7 @@ order by 1,2
 -- Looking at Countries with Highest Infection Rate compared to Population
 
 Select location, population, MAX(total_cases) as HighestInfectionCount, MAX((total_cases/population))*100 as PopulationInfectedPercentage
-From [Portolio Project]..coviddeaths
+From [Portfolio Project]..coviddeaths
 --Where location like '%states%'
 Group by location, population
 order by PopulationInfectedPercentage desc
@@ -43,7 +43,7 @@ order by PopulationInfectedPercentage desc
 -- Showing Countries with Highest Death Count per Population
 
 Select location, Max(cast(Total_deaths as int)) as TotalDeathCount
-From [Portolio Project]..coviddeaths
+From [Portfolio Project]..coviddeaths
 --Where location like '%states%'
 Where continent is not null
 Group by location
@@ -53,7 +53,7 @@ order by TotalDeathCount desc
 --SHOWN BY CONTINENT
 
 Select continent, Max(cast(Total_deaths as int)) as TotalDeathCount
-From [Portolio Project]..coviddeaths
+From [Portfolio Project]..coviddeaths
 --Where location like '%states%'
 Where continent is not null
 Group by continent
@@ -63,7 +63,7 @@ order by TotalDeathCount desc
 --GLOBAL NUMBERS
 
 Select SUM(new_cases) as total_cases, SUM(cast(new_deaths as int)) as total_deaths, SUM(cast(new_deaths as int))/SUM(new_cases) as DeathPercentage
-From [Portolio Project]..coviddeaths
+From [Portfolio Project]..coviddeaths
 --Where location like '%states%'
 WHERE continent is not null
 --Group By date
@@ -76,8 +76,8 @@ Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinatio
 , SUM(cast(vac.new_vaccinations as bigint)) OVER (partition by dea.location order by dea.location, \
 dea.date) as RollingPeopleVaccinated
 --, (RollingPeopleVaccinated/population)*100
-From [Portolio Project]..coviddeaths dea
-join [Portolio Project]..covidvaccs vac
+From [Portfolio Project]..coviddeaths dea
+join [Portfolio Project]..covidvaccs vac
 	on dea.location = vac.location
 	and dea.date = vac.date
 WHERE dea.continent is not null
@@ -94,8 +94,8 @@ Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinatio
 , SUM(cast(vac.new_vaccinations as bigint)) OVER (partition by dea.location order by dea.location,
 dea.date) as RollingPeopleVaccinated
 --, (RollingPeopleVaccinated/population)*100
-From [Portolio Project]..coviddeaths dea
-join [Portolio Project]..covidvaccs vac
+From [Portfolio Project]..coviddeaths dea
+join [Portfolio Project]..covidvaccs vac
 	on dea.location = vac.location
 	and dea.date = vac.date
 WHERE dea.continent is not null
@@ -128,8 +128,8 @@ Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinatio
 , SUM(cast(vac.new_vaccinations as bigint)) OVER (partition by dea.location order by dea.location,
 dea.date) as RollingPeopleVaccinated
 --, (RollingPeopleVaccinated/population)*100
-From [Portolio Project]..coviddeaths dea
-join [Portolio Project]..covidvaccs vac
+From [Portfolio Project]..coviddeaths dea
+join [Portfolio Project]..covidvaccs vac
 	on dea.location = vac.location
 	and dea.date = vac.date
 WHERE dea.continent is not null
@@ -147,8 +147,8 @@ Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinatio
 , SUM(cast(vac.new_vaccinations as bigint)) OVER (partition by dea.location order by dea.location,
 dea.date) as RollingPeopleVaccinated
 --, (RollingPeopleVaccinated/population)*100
-From [Portolio Project]..coviddeaths dea
-join [Portolio Project]..covidvaccs vac
+From [Portfolio Project]..coviddeaths dea
+join [Portfolio Project]..covidvaccs vac
 	on dea.location = vac.location
 	and dea.date = vac.date
 WHERE dea.continent is not null
@@ -157,7 +157,7 @@ WHERE dea.continent is not null
 
 Create View PopulationInfectedPercentage as
 Select location, population, MAX(total_cases) as HighestInfectionCount, MAX((total_cases/population))*100 as PopulationInfectedPercentage
-From [Portolio Project]..coviddeaths
+From [Portfolio Project]..coviddeaths
 --Where location like '%states%'
 Group by location, population
 --order by PopulationInfectedPercentage desc
@@ -165,7 +165,7 @@ Group by location, population
 
 Create View CountryDeathCount as
 Select location, Max(cast(Total_deaths as int)) as TotalDeathCount
-From [Portolio Project]..coviddeaths
+From [Portfolio Project]..coviddeaths
 --Where location like '%states%'
 Where continent is not null
 Group by location
@@ -174,7 +174,7 @@ Group by location
 
 Create View ContinentDeathCount as
 Select continent, Max(cast(Total_deaths as int)) as TotalDeathCount
-From [Portolio Project]..coviddeaths
+From [Portfolio Project]..coviddeaths
 --Where location like '%states%'
 Where continent is not null
 Group by continent
